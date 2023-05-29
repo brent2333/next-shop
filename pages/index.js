@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Title from './components/Title';
 import { getProducts } from '../lib/products';
-
+import ProductCard from './components/ProductCard';
 export async function getStaticProps() {
     console.log('[HOMEPAGE1] getStaticProps')
     const products = await getProducts();
@@ -21,12 +21,10 @@ function HomePage({products}) {
     </Head>
     <main className="px-6 py-4">
     <Title>Next Shop</Title>
-        <ul>
+        <ul className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
           {products.map((product) => (
             <li key={product.id}>
-              <Link href={`/products/${product.id}`}>
-              {product.title}
-              </Link>
+              <ProductCard product={product} />
             </li>
           ))}
         </ul>

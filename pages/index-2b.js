@@ -12,7 +12,7 @@ function HomePage() {
         setProducts(products)
     })();
   }, []);
-  console.log('[HOMEPAGE2] rendered', products);
+  console.log('[HOMEPAGE2b] rendered', products);
 
   return (
     <>

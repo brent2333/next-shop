@@ -1,10 +1,17 @@
+// Opt 1 fetch server side - refetched on every request, slower - done at runtime
 import Head from 'next/head';
 import Title from './components/Title';
-const products = [
-  {id: 1, title: 'first product'},
-  {id: 2, title: 'second product'},
-]
-function HomePage() {
+import { getProducts } from '../lib/products';
+
+export async function getServerSideProps() {
+    console.log('[HOMEPAGE1] getServerSideProps')
+    const products = await getProducts();
+    return {
+        props: {products}
+    }
+}
+
+function HomePage({products}) {
   console.log('[HOMEPAGE] rendered', products)
   return (
     <>

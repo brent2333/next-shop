@@ -1,11 +1,16 @@
+// Opt 1 fetch client side
 import Head from 'next/head';
 import Title from './components/Title';
-const products = [
-  {id: 1, title: 'first product'},
-  {id: 2, title: 'second product'},
-]
+import { getProducts } from '../lib/products';
+import {useState,useEffect} from 'react';
 function HomePage() {
-  console.log('[HOMEPAGE] rendered', products)
+  // fetch when mounted
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    getProducts().then(setProducts)
+  }, []);
+  console.log('[HOMEPAGE2] rendered', products);
+
   return (
     <>
     <Head>

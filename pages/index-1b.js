@@ -1,10 +1,18 @@
+// Opt 1 fetch server side
 import Head from 'next/head';
 import Title from './components/Title';
-const products = [
-  {id: 1, title: 'first product'},
-  {id: 2, title: 'second product'},
-]
-function HomePage() {
+import { getProducts } from '../lib/products';
+
+export async function getStaticProps() {
+    console.log('[HOMEPAGE1] getStaticProps')
+    const products = await getProducts();
+    return {
+        props: {products},
+        revalidate: 60 * 5 //seconds - incremental static regeneration
+    }
+}
+
+function HomePage({products}) {
   console.log('[HOMEPAGE] rendered', products)
   return (
     <>

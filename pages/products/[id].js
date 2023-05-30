@@ -1,7 +1,5 @@
 
-import Head from 'next/head';
-import Title from '../components/Title';
-import Image from 'next/image';
+import Page from '../Page';
 import { getProducts, getProduct } from '../../lib/products';
 import { ApiError } from '../../lib/api';
 
@@ -38,12 +36,7 @@ export async function getStaticProps({ params: {id} }) {
 function ProductPage({product}) {
     console.log('[Product page] re-render]')
     return (
-        <>
-        <Head>
-          <title>Product</title>
-        </Head>
-        <main className="px-6 py-4">
-        <Title className="w-full">{product.title}</Title>
+        <Page title={product.title}>
         <div className="flex flex-col lg:flex-row">
             <div>
         <Image src={product.pictureUrl} alt="" width={640} height={480}/>
@@ -52,10 +45,8 @@ function ProductPage({product}) {
         <p clasName="text-sm">{product.description}</p>
         <p className="text-lg font-bold mt-4">{product.price}</p>
         </div>
-        
         </div>
-        </main>
-        </>
+        </Page>
       )
 
 }

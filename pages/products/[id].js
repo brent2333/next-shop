@@ -2,6 +2,9 @@
 import Page from '../Page';
 import { getProducts, getProduct } from '../../lib/products';
 import { ApiError } from '../../lib/api';
+import Image from 'next/image';
+import {useUser} from '../../hooks/user';
+
 
 export async function getStaticPaths() {
     const products = await getProducts();
@@ -34,6 +37,7 @@ export async function getStaticProps({ params: {id} }) {
 }
 
 function ProductPage({product}) {
+
     console.log('[Product page] re-render]')
     return (
         <Page title={product.title}>
@@ -42,7 +46,7 @@ function ProductPage({product}) {
         <Image src={product.pictureUrl} alt="" width={640} height={480}/>
         </div>
         <div className="flex-1 lg:ml-4">
-        <p clasName="text-sm">{product.description}</p>
+        <p className="text-sm">{product.description}</p>
         <p className="text-lg font-bold mt-4">{product.price}</p>
         </div>
         </div>

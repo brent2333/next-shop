@@ -14,7 +14,7 @@ async function handleUser(req,res) {
             name: user.username
         })
     } catch(err) {
-        console.log('WHAT THE FUCK')
+        console.log('err users', err)
         res.status(401).end();
     }
 }

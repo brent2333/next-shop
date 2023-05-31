@@ -1,16 +1,13 @@
 import Link from 'next/link';
 import { fetchJson } from '../../lib/api';
 import { useRouter } from 'next/router';
-import {useUser} from '../../hooks/user'
+import {useUser, useSignOut} from '../../hooks/user';
 
 function NavBar() {
     const user = useUser();
     const router = useRouter()
     console.log('NAVBAR', user);
-    const handleSignout = async () => {
-        await fetchJson('/api/logout');
-        router.push('/signin')
-    }
+    const signOut = useSignOut();
     return (
         <nav className="px-2 py-1">
             <ul className="flex gap-2">
@@ -24,7 +21,10 @@ function NavBar() {
                         {user.name}
                     </li>
                     <li>
-                    <button onClick={handleSignout}>Sign Out</button>
+                    <button onClick={signOut}>Sign Out</button>
+                    </li>
+                    <li>
+                    <Link href="/cart">Cart</Link>
                     </li>
                     </>
                 ) : (

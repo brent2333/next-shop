@@ -4,7 +4,7 @@ import { getProducts, getProduct } from '../../lib/products';
 import { ApiError } from '../../lib/api';
 import Image from 'next/image';
 import {useUser} from '../../hooks/user';
-
+import AddToCartWidget from '../components/AddToCartWidget';
 
 export async function getStaticPaths() {
     const products = await getProducts();
@@ -37,7 +37,7 @@ export async function getStaticProps({ params: {id} }) {
 }
 
 function ProductPage({product}) {
-
+    const user = useUser();
     console.log('[Product page] re-render]')
     return (
         <Page title={product.title}>
@@ -49,6 +49,7 @@ function ProductPage({product}) {
         <p className="text-sm">{product.description}</p>
         <p className="text-lg font-bold mt-4">{product.price}</p>
         </div>
+        {user && <AddToCartWidget productId={product.id} />}
         </div>
         </Page>
       )

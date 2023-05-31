@@ -1,13 +1,24 @@
 import {useState} from 'react';
+import { useRouter } from 'next/router';
 import Button from './Buttton';
-import {useAddToCart} from '../../hooks/cart';
+// import {useAddToCart} from '../../hooks/cart';
+import { useMutation } from 'react-query';
+import { fetchJson } from '../../lib/api';
 
 
 function AddToCartWidget({productId}) {
+    const router = useRouter();
     const [quantity, setQuantity] = useState(1);
-    const { addToCart } = useAddToCart();
+    const mutation = useMutation(() => 
+        fetchJson('/api/cart', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({productId,quantity})
+        })
+        )
     const handleClick = async () => {
-        const response = await addToCart(productId, quantity)
+        await mutation.mutateAsync();
+        router.push('/cart');
     }
     return (
         <div>
@@ -16,9 +27,13 @@ function AddToCartWidget({productId}) {
             value={quantity.toString()}
             onChange={(event) => setQuantity(parseInt(event.target.value))}
             />
-            <Button onClick={handleClick}>
+            {mutation.isLoading ? (
+                <p>loading . . .</p>
+            ) : (
+                <Button onClick={handleClick}>
                 Add to Cart
             </Button>
+            )}
         </div>
     )
 }
